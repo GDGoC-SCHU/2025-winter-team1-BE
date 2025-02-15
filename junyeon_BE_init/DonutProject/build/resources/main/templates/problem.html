@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>문제 목록 및 풀이 기록</title>
+    <style>
+        /* 스타일링 */
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>문제 목록 및 풀이 기록</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>문제</th>
+            <th>정답</th>
+            <th>난이도</th>
+        </tr>
+        </thead>
+        <tbody id="problem-list">
+        </tbody>
+    </table>
+</div>
+
+<script th:inline="javascript">
+    // 문제 목록 조회 API 호출
+    function getProblemList() {
+        const userId = /*[[${userId}]]*/; // Thymeleaf를 사용하여 userId를 전달받음
+
+        fetch(`/study/history/${userId}`)
+            .then(response => response.json())
+            .then(problems => {
+                const problemList = document.getElementById("problem-list");
+                problemList.innerHTML = ""; // 기존 목록 초기화
+
+                problems.forEach(problem => {
+                    const row = problemList.insertRow();
+                    const problemCell = row.insertCell();
+                    const answerCell = row.insertCell();
+                    const difficultyCell = row.insertCell();
+
+                    problemCell.innerText = problem.problem;
+                    answerCell.innerText = problem.answer;
+                    difficultyCell.innerText = problem.difficulty;
+                });
+            });
+    }
+
+    // 페이지 로드 시 문제 목록 조회
+    window.onload = getProblemList;
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인 페이지</title>
+</head>
+<body>
+<div class="container">
+    <h1>코딩 학습</h1>
+
+    <div class="problem-container">
+        <h2>문제</h2>
+        <div id="problem-content"></div>
+
+        <div class="answer-form">
+            <input type="text" id="answer" placeholder="답안을 입력하세요">
+            <button onclick="submitAnswer()">제출</button>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <a th:href="@{/problem}" class="history-link">문제 목록 및 풀이 기록</a>
+</div>
+
+<script th:inline="javascript">
+    // 문제 생성 API 호출
+    function generateProblem() {
+        const difficulty = "easy"; // 난이도 설정 (easy, medium, hard)
+        fetch(`/generate-problem?difficulty=${difficulty}`)
+            .then(response => response.text())
+            .then(problem => {
+                document.getElementById("problem-content").innerText = problem;
+            });
+    }
+
+    // 정답 제출 API 호출
+    function submitAnswer() {
+        const answer = document.getElementById("answer").value;
+        const problem = document.getElementById("problem-content").innerText;
+        const userId = /*[[${userId}]]*/; // Thymeleaf를 사용하여 userId를 전달받음
+
+        fetch(`/study/submit/${userId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userId: userId, problem: problem, correctAnswer: answer, difficulty: "easy" }) // userId, difficulty 추가
+        })
+            .then(response => response.text())
+            .then(result => {
+                document.getElementById("result").innerText = result;
+            });
+    }
+
+    // 페이지 로드 시 문제 생성
+    window.onload = generateProblem;
+</script>
+</body>
+</html>
