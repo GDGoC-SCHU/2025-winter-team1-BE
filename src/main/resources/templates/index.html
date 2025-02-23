@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>코딩 문제 생성 및 풀이</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>코딩 문제 생성 및 풀이</h1>
+    <div id="problem-generation">
+        <h2>문제 생성</h2>
+        <label for="level">난이도:</label>
+        <select id="level">
+            <option value="easy">쉬움</option>
+            <option value="medium">중간</option>
+            <option value="hard">어려움</option>
+        </select>
+        <label for="language">언어:</label>
+        <select id="language">
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="javascript">JavaScript</option>
+        </select>
+        <button id="generate-button">문제 생성</button>
+    </div>
+    <div id="problem-solving" style="display: none;">
+        <h2>문제 풀이</h2>
+        <div id="problem-content"></div>
+        <textarea id="user-answer" placeholder="답안을 입력하세요."></textarea>
+        <button id="submit-button">답안 제출</button>
+    </div>
+    <div id="user-history">
+        <a href="/mypage">마이페이지</a> </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

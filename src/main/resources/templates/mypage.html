@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>마이페이지</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>마이페이지</h1>
+  <h2>풀이 기록</h2>
+  <div id="problem-list">
+    <div class="problem-item" th:each="problem : ${solvedProblems}">
+      <div class="modified-at" th:text="${problem.modifiedAt}"></div>
+      <div class="problem-content" th:text="${problem.problem}"></div>
+      <div class="problem-details">
+        <span th:text="'정답: ' + ${problem.correctAnswer}"></span>
+        <span th:text="'난이도: ' + ${problem.level}"></span>
+        <span th:text="'언어: ' + ${problem.language}"></span>
+      </div>
+    </div>
+  </div>
+  <a href="/index">메인 페이지</a>
+  <form action="/logout" method="post">
+    <button type="submit">로그아웃</button>
+  </form>
+</div>
+</body>
+</html>
